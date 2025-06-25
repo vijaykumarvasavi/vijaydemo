@@ -1,0 +1,3 @@
+INFO main io.github.bonigarcia.wdm.WebDriverManager - Using chromedriver 103.0.5060.134 (resolved driver for Chrome 103)
+xINFO main io.github.bonigarcia.wdm.WebDriverManager - Exporting webdriver.chrome.driver as /Users/hemant/.cache/selenium/chromedriver/mac64/103.0.5060.134/chromedriver
+x
