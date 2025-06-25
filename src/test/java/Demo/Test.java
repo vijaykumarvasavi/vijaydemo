@@ -12,21 +12,17 @@ public class Test extends TestBase {
     }
 
 
-
-
-
     LoginPage Loginpage;
     Test_Page Tl;
-
-
-    String Currenturl = driver.getCurrentUrl();
-
 
 
     @BeforeMethod()
     public void loginTest() throws InterruptedException {
           initialization();
           Tl = new Test_Page();
+
+
+        Loginpage.ValidateLogin(prop.getProperty("username"), prop.getProperty("pass"));
     }
 
 
@@ -47,9 +43,13 @@ public class Test extends TestBase {
     }
     // Test Scenarios(Checkout Process)------------>4
     public void Checkout_Process(){
-        Tl.Cart_Functionality();
+        Tl.checkout();
     }
 
+    // Test Scenarios(Checkout Process)------------>4
+    public void Edge_Cases(){
+        Tl.EdgeCases();
+    }
 
 
     @AfterMethod

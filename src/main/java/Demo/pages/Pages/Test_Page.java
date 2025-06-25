@@ -2,11 +2,13 @@ package Demo.pages.Pages;
 
 import Demo.base.TestBase;
 import Demo.commands.WebCommands;
+import Demo.util.LogUtils;
 import Demo.util.TestUtil;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.annotations.Test;
+import org.testng.Assert;
+
 
 public class Test_Page extends TestBase {
     public Test_Page() {
@@ -39,6 +41,12 @@ public class Test_Page extends TestBase {
     WebElement PIN;
     @FindBy(xpath = "//input[@id=\"continue\"]")
     WebElement Cont;
+    @FindBy(xpath = "//div[@class=\"summary_total_label\"]")
+    WebElement Total;
+    @FindBy(xpath = "//button[@id=\"finish\"]")
+    WebElement Finish;
+    @FindBy(xpath = "//h2[text()='Thank you for your order!']")
+    WebElement Finalorder;
 
 
 
@@ -57,9 +65,27 @@ public class Test_Page extends TestBase {
         TestUtil.click(T_Shirt3,"Removed clicked 4");
         TestUtil.click(cart,"clicked cart");
     }
-    public void checkou(){
+    public void checkout(){
       TestUtil.click(Checkout,"Clicked checkout");
+      TestUtil.sendKeys(fname,"Demo","");
+      TestUtil.sendKeys(Lname,"Demo","");
+      TestUtil.sendKeys(PIN,"411004","");
+      TestUtil.click(Cont,"Clicked Con");
+      WebCommands.staticSleep(1000);
 
+      String st = Total.getText();
+      LogUtils.info(st);
+      String op1 = "75.76";
+      Assert.assertEquals(st,op1);
+      TestUtil.click(Finish,"Clicked finish");
+
+        String oderfinal = Finalorder.getText();
+        LogUtils.info(oderfinal);
+        String final_message = "Thank you for your order!";
+        Assert.assertEquals(oderfinal,final_message);
+    }
+    public void EdgeCases(){
+        TestUtil.click(cart,"clicked cart");
     }
 
 }
