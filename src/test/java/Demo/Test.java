@@ -26,30 +26,6 @@ public class Test extends TestBase {
     }
 
 
-    // Test Scenarios(Login Tests)-------> 1
-    public void Login_Tests() throws Exception
-    {
-        Loginpage.ValidateLogin(prop.getProperty("username"), prop.getProperty("pass"));
-    }
-
-
-    // Test Scenarios(Product Filtering)------------>2
-    public void Low_price() throws Exception {
-        Tl.low_price();
-    }
-    // Test Scenarios(Cart Functionality)------------>3
-    public void Cart_Functionality(){
-        Tl.Cart_Functionality();
-    }
-    // Test Scenarios(Checkout Process)------------>4
-    public void Checkout_Process(){
-        Tl.checkout();
-    }
-
-    // Test Scenarios(Checkout Process)------------>4
-    public void Edge_Cases(){
-        Tl.EdgeCases();
-    }
 
 
     @AfterMethod
