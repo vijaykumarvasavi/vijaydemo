@@ -2,8 +2,15 @@ package Demo;
 import Demo.base.TestBase;
 import Demo.pages.Pages.Test_Page;
 import Demo.pages.login.LoginPage;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.*;
 
+import java.util.List;
 
 
 public class Test extends TestBase {
@@ -19,41 +26,53 @@ public class Test extends TestBase {
     @BeforeMethod()
     public void loginTest() throws InterruptedException {
           initialization();
-          Tl = new Test_Page();
-
-
-        Loginpage.ValidateLogin(prop.getProperty("username"), prop.getProperty("pass"));
     }
 
+    public static void main(String[] args) {
 
-    // Test Scenarios(Login Tests)-------> 1
-    public void Login_Tests() throws Exception
-    {
-        Loginpage.ValidateLogin(prop.getProperty("username"), prop.getProperty("pass"));
-    }
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
+
+        driver.get("https://the-internet.herokuapp.com/login");
+
+        driver.findElement(By.xpath("//input[@id=\"username\"]")).sendKeys("tomsmith");
+        driver.findElement(By.xpath("//input[@id=\"username\"]")).sendKeys("SuperSecretPassword!");
+        driver.findElement(By.xpath("//i[@class=\"fa fa-2x fa-sign-in\"]")).click();
+
+        driver.findElement(By.xpath("//button[text()='OK']")).click();
 
 
-    // Test Scenarios(Product Filtering)------------>2
-    public void Low_price() throws Exception {
-        Tl.low_price();
-    }
-    // Test Scenarios(Cart Functionality)------------>3
-    public void Cart_Functionality(){
-        Tl.Cart_Functionality();
-    }
-    // Test Scenarios(Checkout Process)------------>4
-    public void Checkout_Process(){
-        Tl.checkout();
+
+//Asserts
+        // Locate heading
+        WebElement heading = driver.findElement(By.xpath("//h2[text()='Secure Area']"));
+
+        // Assertion
+        Assert.assertTrue(heading.isDisplayed(), "Secure Area heading is NOT visible");
+
+       driver.findElement(By.xpath("//i[text()=' Logout']")).click();
+
+
+// Failed login
+        driver.findElement(By.xpath("//input[@id=\"username\"]")).sendKeys("TESTTEST");
+        driver.findElement(By.xpath("//input[@id=\"username\"]")).sendKeys("TESTETS");
+        driver.findElement(By.xpath("//i[@class=\"fa fa-2x fa-sign-in\"]")).click();
+
+
+
+        String errorText = driver.findElement(By.xpath("//div[@id=\"flash\"]")).getText();
+
+        Assert.assertTrue(errorText.contains("Your username is invalid!"),
+                "Error message mismatch");
+
+
     }
 
-    // Test Scenarios(Checkout Process)------------>4
-    public void Edge_Cases(){
-        Tl.EdgeCases();
-    }
 
 
     @AfterMethod
     public void Close() {
+
         driver.quit();
     }
 }
